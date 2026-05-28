@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Balonmano — La Guía Interactiva Completa</title>
+<meta name="description" content="Una guía educativa interactiva sobre el deporte del balonmano — historia, reglas, estrategias y más.">
+<meta name="theme-color" content="#050505">
+<link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiR3VpYSBCYWxvbm1hbm8iLCJzaG9ydF9uYW1lIjoiQmFsb25tYW5vIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwNTA1MDUiLCJ0aGVtZV9jb2xvciI6IiMwNTA1MDUifQ==">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
+      },
+      colors: {
+        surface: { DEFAULT: '#050505', 1: '#0a0a0a', 2: '#111111', 3: '#1a1a1a' }
+      }
+    }
+  }
+}
+</script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body { background: #050505; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: #262626; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #404040; }
+
+.scanlines {
+  position: fixed; inset: 0; z-index: 50; pointer-events: none; opacity: 0.3;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+  background-size: 100% 4px;
+}
+
+@keyframes char-reveal {
+  0% { opacity:0; transform:translateY(1.5rem); filter:blur(12px); }
+  100% { opacity:1; transform:translateY(0); filter:blur(0); }
+}
+.char-animate { animation: char-reveal 0.8s cubic-bezier(0.2,0.8,0.2,1) forwards; }
+
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+.float-anim { animation: float 6s ease-in-out infinite; }
+
+@keyframes pulse-glow { 0%,100%{opacity:0.4} 50%{opacity:1} }
+.pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+
+@keyframes slide-in-up { 0%{opacity:0;transform:translateY(40px)} 100%{opacity:1;transform:translateY(0)} }
+@keyframes fade-in { 0%{opacity:0} 100%{opacity:1} }
+
+.animate-on-scroll { opacity:0; }
+.animate-on-scroll.visible { animation: slide-in-up 0.7s cubic-bezier(0.2,0.8,0.2,1) forwards; }
+.animate-on-scroll.visible.delay-1 { animation-delay: 0.1s; }
+.animate-on-scroll.visible.delay-2 { animation-delay: 0.2s; }
+.animate-on-scroll.visible.delay-3 { animation-delay: 0.3s; }
+.animate-on-scroll.visible.delay-4 { animation-delay: 0.4s; }
+.animate-on-scroll.visible.delay-5 { animation-delay: 0.5s; }
+
+.hover-card {
+  transition: all 0.5s cubic-bezier(0.2,0.8,0.2,1);
+  border: 1px solid rgba(255,255,255,0.05);
+  transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1);
+  transform-style: preserve-3d;
+}
+.hover-card:hover {
+  transform: perspective(1000px) scale3d(1.02,1.02,1.02);
+  border-color: rgba(255,255,255,0.15);
+  box-shadow: 0 0 30px rgba(6,182,212,0.15), 0 25px 50px -12px rgba(0,0,0,0.5);
+}
+
+.nav-blur { backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); }
+
+.gradient-text {
+  background: linear-gradient(to bottom, #ffffff, rgba(255,255,255,0.6));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-accent {
+  background: linear-gradient(135deg, #22d3ee, #06b6d4, #a855f7);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.card-gradient { background: linear-gradient(to bottom right, rgba(255,255,255,0.03), transparent); }
+
+.grid-bg {
+  background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+}
+
+.tab-btn { transition: all 0.3s ease; }
+.tab-btn.active { color: #22d3ee; border-color: #22d3ee; background: rgba(34,211,238,0.08); }
+
+.quiz-option {
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.quiz-option:hover { border-color: #22d3ee; background: rgba(34,211,238,0.05); }
+.quiz-option.correct { border-color: #10b981!important; background: rgba(16,185,129,0.15)!important; }
+.quiz-option.incorrect { border-color: #ef4444!important; background: rgba(239,68,68,0.1)!important; }
+.quiz-option.disabled { pointer-events: none; }
+
+.toast {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 100;
+  padding: 1rem 1.5rem; border-radius: 0.75rem;
+  background: rgba(10,10,10,0.95); border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(12px); transform: translateY(100px); opacity: 0;
+  transition: all 0.4s cubic-bezier(0.2,0.8,0.2,1);
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+
+.timeline-line {
+  position: absolute; left: 1.25rem; top: 0; bottom: 0; width: 2px;
+  background: linear-gradient(to bottom, #22d3ee, #a855f7, transparent);
+}
+.timeline-dot {
+  width: 10px; height: 10px; border-radius: 50%; background: #22d3ee;
+  position: absolute; left: calc(1.25rem - 4px); top: 0.5rem;
+  box-shadow: 0 0 8px rgba(34,211,238,0.6);
+}
+
+.mobile-menu {
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1);
+}
+.mobile-menu.open { transform: translateX(0); }
+</style>
+</head>
+<body class="relative">
+<div class="scanlines"></div>
+
+<div class="fixed inset-0 z-0 pointer-events-none">
+  <div class="absolute top-0 left-1/4 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-[120px]"></div>
+  <div class="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-[120px]"></div>
+  <div class="absolute top-1/2 left-0 w-[400px] h-[400px] bg-blue-500/3 rounded-full blur-[100px]"></div>
+</div>
+
+<nav class="fixed top-0 inset-x-0 z-40 nav-blur bg-surface/80 border-b border-white/5" role="navigation" aria-label="Navegación principal">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <a href="#hero" class="flex items-center gap-3 group" aria-label="Inicio Guía Balonmano">
+      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center text-black font-bold text-sm group-hover:shadow-lg group-hover:shadow-cyan-500/30 transition-shadow duration-300">B</div>
+      <span class="font-semibold text-sm tracking-wide">GUÍA BALONMANO</span>
+    </a>
+    <div class="hidden md:flex items-center gap-1">
+      <a href="#history" class="px-3 py-2 text-xs font-medium text-neutral-400 hover:text-white hover:bg-white/5 rounded-md transition-all">Historia</a>
+      <a href="#rules" class="px-3 py-2 text-xs font-medium text-neutral-400 hover:text-white hover:bg-white/5 rounded-md transition-all">Reglas</a>
+      <a href="#equipment" class="px-3 py-2 text-xs font-medium text-neutral-400 hover:text-white hover:bg-white/5 rounded-md transition-all">Equipamiento</a>
+      <a href="#types" class="px-3 py-2 text-xs font-medium text-neutral-400 hover:text-white hover:bg-white/5 rounded-md transition-all">Tipos</a>
+      <a href="#competitions" class="px-3 py-2 text-xs font-medium text-neutral-400 hover:text-white hover:bg-white/5 rounded-md transition-all">Competiciones</a>
+      <a href="#strategy" class="px-3 py-2 text-xs font-medium text-neutral-400 hover:text-white hover:bg-white/5 rounded-md transition-all">Estrategia</a>
+      <a href="#quiz" class="px-3 py-2 text-xs font-medium text-cyan-400 hover:text-cyan-300 hover:bg-cyan-400/5 rounded-md transition-all">Cuestionario</a>
+    </div>
+    <button id="mobileMenuBtn" class="md:hidden p-2 text-neutral-400 hover:text-white" aria-label="Abrir menú" aria-expanded="false">
+      <iconify-icon icon="lucide:menu" width="20" height="20"></iconify-icon>
+    </button>
+  </div>
+</nav>
+
+<div id="mobileMenu" class="mobile-menu fixed inset-y-0 right-0 w-72 z-50 bg-surface-1/95 nav-blur border-l border-white/5 p-6 flex flex-col gap-2" role="dialog" aria-label="Navegación móvil">
+  <button id="mobileMenuClose" class="self-end p-2 text-neutral-400 hover:text-white mb-4" aria-label="Cerrar menú">
+    <iconify-icon icon="lucide:x" width="20" height="20"></iconify-icon>
+  </button>
+  <a href="#history" class="mobile-nav-link px-4 py-3 text-sm text-neutral-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">Historia</a>
+  <a href="#rules" class="mobile-nav-link px-4 py-3 text-sm text-neutral-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">Reglas y Juego</a>
+  <a href="#equipment" class="mobile-nav-link px-4 py-3 text-sm text-neutral-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">Equipamiento</a>
+  <a href="#types" class="mobile-nav-link px-4 py-3 text-sm text-neutral-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">Tipos de Balonmano</a>
+  <a href="#competitions" class="mobile-nav-link px-4 py-3 text-sm text-neutral-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">Competiciones</a>
+  <a href="#strategy" class="mobile-nav-link px-4 py-3 text-sm text-neutral-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">Estrategia y Entrenamiento</a>
+  <a href="#injuries" class="mobile-nav-link px-4 py-3 text-sm text-neutral-300 hover:text-white hover:bg-white/5 rounded-lg transition-all">Lesiones</a>
+  <a href="#quiz" class="mobile-nav-link px-4 py-3 text-sm text-cyan-400 hover:bg-cyan-400/5 rounded-lg transition-all">Hacer el Cuestionario</a>
+</div>
+
+<main class="relative z-10">
+
+<section id="hero" class="min-h-screen flex items-center justify-center relative px-4 pt-16">
+  <div class="absolute inset-0 grid-bg opacity-40"></div>
+  <div class="max-w-5xl mx-auto text-center relative">
+    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 mb-8" style="animation: fade-in 0.8s ease forwards;">
+      <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+      <span class="text-xs font-medium text-neutral-400 tracking-wider uppercase">Guía Educativa Interactiva</span>
+    </div>
+    <h1 id="heroTitle" class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-semibold tracking-tighter leading-[1.05] mb-6 gradient-text" aria-label="BALONMANO">
+    </h1>
+    <p class="text-lg sm:text-xl text-neutral-400 max-w-2xl mx-auto leading-relaxed mb-10" style="animation: fade-in 1.2s ease 0.6s forwards; opacity:0;">
+      Un deporte competitivo y rápido donde el trabajo en equipo, la estrategia, los pases rápidos y los lanzamientos precisos determinan la victoria durante partidos intensos.
+    </p>
+    <div class="flex flex-wrap items-center justify-center gap-4" style="animation: fade-in 1.2s ease 0.9s forwards; opacity:0;">
+      <a href="#history" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-black text-sm font-semibold rounded-lg hover:scale-105 transition-transform duration-300 shadow-lg shadow-white/10">
+        Explorar la Guía <iconify-icon icon="lucide:arrow-down" width="16" height="16"></iconify-icon>
+      </a>
+      <a href="#quiz" class="inline-flex items-center gap-2 px-6 py-3 border border-white/15 text-white text-sm font-medium rounded-lg hover:bg-white/5 hover:border-white/25 transition-all duration-300">
+        Hacer el Cuestionario <iconify-icon icon="lucide:brain" width="16" height="16"></iconify-icon>
+      </a>
+    </div>
+    <div class="grid grid-cols-3 gap-6 mt-16 max-w-lg mx-auto" style="animation: fade-in 1.2s ease 1.2s forwards; opacity:0;">
+      <div class="text-center">
+        <div class="text-2xl sm:text-3xl font-semibold text-cyan-400">19M+</div>
+        <div class="text-xs text-neutral-500 mt-1 uppercase tracking-wider">Jugadores</div>
+      </div>
+      <div class="text-center">
+        <div class="text-2xl sm:text-3xl font-semibold text-purple-400">1946</div>
+        <div class="text-xs text-neutral-500 mt-1 uppercase tracking-wider">Fundación IHF</div>
+      </div>
+      <div class="text-center">
+        <div class="text-2xl sm:text-3xl font-semibold text-blue-400">1972</div>
+        <div class="text-xs text-neutral-500 mt-1 uppercase tracking-wider">Debut Olímpico</div>
+      </div>
+    </div>
+    <div class="absolute -bottom-20 left-1/2 -translate-x-1/2 float-anim">
+      <iconify-icon icon="lucide:chevrons-down" width="24" height="24" class="text-neutral-600"></iconify-icon>
+    </div>
+  </div>
+</section>
+
+<section class="py-20 px-4 relative">
+  <div class="max-w-5xl mx-auto">
+    <div class="animate-on-scroll text-center mb-12">
+      <span class="text-xs font-semibold text-cyan-400 uppercase tracking-widest">Resumen</span>
+      <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight mt-3 gradient-text">Índice de Contenidos</h2>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <a href="#history" class="animate-on-scroll delay-1 hover-card card-gradient rounded-xl p-6 bg-surface-1/80 group block">
+        <div class="w-10 h-10 rounded-lg bg-cyan-400/10 flex items-center justify-center mb-4 group-hover:bg-cyan-400/20 transition-colors">
+          <iconify-icon icon="lucide:clock" width="20" height="20" class="text-cyan-400"></iconify-icon>
+        </div>
+        <h3 class="text-sm font-semibold mb-1">Historia</h3>
+        <p class="text-xs text-neutral-500 leading-relaxed">Desde los orígenes antiguos hasta el juego moderno</p>
+      </a>
+      <a href="#rules" class="animate-on-scroll delay-2 hover-card card-gradient rounded-xl p-6 bg-surface-1/80 group block">
+        <div class="w-10 h-10 rounded-lg bg-purple-400/10 flex items-center justify-center mb-4 group-hover:bg-purple-400/20 transition-colors">
+          <iconify-icon icon="lucide:book-open" width="20" height="20" class="text-purple-400"></iconify-icon>
+        </div>
+        <h3 class="text-sm font-semibold mb-1">Reglas y Juego</h3>
+        <p class="text-xs text-neutral-500 leading-relaxed">Estructura del partido, faltas y conducta</p>
+      </a>
+      <a href="#equipment" class="animate-on-scroll delay-3 hover-card card-gradient rounded-xl p-6 bg-surface-1/80 group block">
+        <div class="w-10 h-10 rounded-lg bg-blue-400/10 flex items-center justify-center mb-4 group-hover:bg-blue-400/20 transition-colors">
+          <iconify-icon icon="lucide:target" width="20" height="20" class="text-blue-400"></iconify-icon>
+        </div>
+        <h3 class="text-sm font-semibold mb-1">Equipamiento</h3>
+        <p class="text-xs text-neutral-500 leading-relaxed">Balones, pistas y equipación</p>
+      </a>
+      <a href="#types" class="animate-on-scroll delay-4 hover-card card-gradient rounded-xl p-6 bg-surface-1/80 group block">
+        <div class="w-10 h-10 rounded-lg bg-emerald-400/10 flex items-center justify-center mb-4 group-hover:bg-emerald-400/20 transition-colors">
+          <iconify-icon icon="lucide:layers" width="20" height="20" class="text-emerald-400"></iconify-icon>
+        </div>
+        <h3 class="text-sm font-semibold mb-1">Tipos</h3>
+        <p class="text-xs text-neutral-500 leading-relaxed">Interior, playa y más formatos</p>
+      </a>
+      <a href="#competitions" class="animate-on-scroll delay-1 hover-card card-gradient rounded-xl p-6 bg-surface-1/80 group block">
+        <div class="w-10 h-10 rounded-lg bg-amber-400/10 flex items-center justify-center mb-4 group-hover:bg-amber-400/20 transition-colors">
+          <iconify-icon icon="lucide:trophy" width="20" height="20" class="text-amber-400"></iconify-icon>
+        </div>
+        <h3 class="text-sm font-semibold mb-1">Competiciones</h3>
+        <p class="text-xs text-neutral-500 leading-relaxed">Olímpicos, Mundiales y Continentales</p>
+      </a>
+      <a href="#culture" class="animate-on-scroll delay-2 hover-card card-gradient rounded-xl p-6 bg-surface-1/80 group block">
+        <div class="w-10 h-10 rounded-lg bg-pink-400/10 flex items-center justify-center mb-4 group-hover:bg-pink-400/20 transition-colors">
+          <iconify-icon icon="lucide:heart" width="20" height="20" class="text-pink-400"></iconify-icon>
+        </div>
+        <h3 class="text-sm font-semibold mb-1">Cultura</h3>
+        <p class="text-xs text-neutral-500 leading-relaxed">Comunidad, jugadores y equipos</p>
+      </a>
+      <a href="#strategy" class="animate-on-scroll delay-3 hover-card card-gradient rounded-xl p-6 bg-surface-1/80 group block">
+        <div class="w-10 h-10 rounded-lg bg-red-400/10 flex items-center justify-center mb-4 group-hover:bg-red-400/20 transition-colors">
+          <iconify-icon icon="lucide:zap" width="20" height="20" class="text-red-400"></iconify-icon>
+        </div>
+        <h3 class="text-sm font-semibold mb-1">Estrategia</h3>
+        <p class="text-xs text-neutral-500 leading-relaxed">Técnicas ofensivas y defensivas</p>
+      </a>
+      <a href="#injuries" class="animate-on-scroll delay-4 hover-card card-gradient rounded-xl p-6 bg-surface-1/80 group block">
+        <div class="w-10 h-10 rounded-lg bg-orange-400/10 flex items-center justify-center mb-4 group-hover:bg-orange-400/20 transition-colors">
+          <iconify-icon icon="lucide:shield" width="20" height="20" class="text-orange-400"></iconify-icon>
+        </div>
+        <h3 class="text-sm font-semibold mb-1">Lesiones</h3>
+        <p class="text-xs text-neutral-500 leading-relaxed">Prevención y medidas de seguridad</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="history" class="py-24 px-4 relative">
+  <div class="max-w-5xl mx-auto">
+    <div class="animate-on-scroll mb-16">
+      <span class="text-xs font-semibold text-cyan-400 uppercase tracking-widest">Capítulo 01</span>
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight mt-3 gradient-text">Historia del Balonmano</h2>
+      <p class="text-neutral-400 mt-4 max-w-2xl leading-relaxed">Surgiendo de los antiguos juegos de pelota, el balonmano moderno se formalizó a finales del siglo XIX en Europa, con desarrollos significativos que llevaron a la creación de la Federación Internacional de Balonmano (IHF) en 1946.</p>
+    </div>
+    <div class="relative pl-12 space-y-10">
+      <div class="timeline-line"></div>
+      <div class="animate-on-scroll delay-1 relative">
+        <div class="timeline-dot"></div>
+        <div class="hover-card card-gradient rounded-xl p-6 bg-surface-1/80">
+          <span class="text-xs font-mono text-cyan-400 tracking-wider">ÉPOCA ANTIGUA</span>
+          <h3 class="text-lg font-semibold mt-2">Orígenes Antiguos</h3>
+          <p class="text-sm text-neutral-400 mt-2 leading-relaxed">Juegos que implicaban lanzamientos de pelota y juegos de pared evidentes en culturas como las de Egipto y Roma, sentando las bases del balonmano moderno.</p>
+        </div>
+      </div>
+      <div class="animate-on-scroll delay-2 relative">
+        <div class="timeline-dot" style="background:#a855f7; box-shadow:0 0 8px rgba(168,85,247,0.6)"></div>
+        <div class="hover-card card-gradient rounded-xl p-6 bg-surface-1/80">
+          <span class="text-xs font-mono text-purple-400 tracking-wider">FINALES DEL SIGLO XIX</span>
+          <h3 class="text-lg font-semibold mt-2">Surge la Forma Moderna</h3>
+          <p class="text-sm text-neutral-400 mt-2 leading-relaxed">La forma moderna del balonmano comenzó a tomar forma en Europa, particularmente en Alemania y Escandinavia. Inicialmente se jugaba al aire libre con equipos de 11 jugadores.</p>
+        </div>
+      </div>
+      <div class="animate-on-scroll delay-3 relative">
+        <div class="timeline-dot" style="background:#3b82f6; box-shadow:0 0 8px rgba(59,130,246,0.6)"></div>
+        <div class="hover-card card-gradient rounded-xl p-6 bg-surface-1/80">
+          <span class="text-xs font-mono text-blue-400 tracking-wider">1910–1923</span>
+          <h3 class="text-lg font-semibold mt-2">Primer Partido Oficial y Órgano Rector</h3>
+          <p class="text-sm text-neutral-400 mt-2 leading-relaxed">Se cree que el primer partido oficial de balonmano se disputó en 1910. En la década de 1920, el deporte ganó popularidad en Europa. En 1923, se fundó la Federación Internacional de Balonmano Aficionado (IAHF).</p>
+        </div>
+      </div>
+      <div class="animate-on-scroll delay-4 relative">
+        <div class="timeline-dot" style="background:#10b981; box-shadow:0 0 8px rgba(16,185,129,0.6)"></div>
+        <div class="hover-card card-gradient rounded-xl p-6 bg-surface-1/80">
+          <span class="text-xs font-mono text-emerald-400 tracking-wider">1936</span>
+          <h3 class="text-lg font-semibold mt-2">Deporte de Demostración Olímpico</h3>
+          <p class="text-sm text-neutral-400 mt-2 leading-relaxed">El balonmano se incluyó por primera vez como evento de demostración durante los Juegos Olímpicos de Berlín en 1936, marcando un hito significativo en el reconocimiento internacional.</p>
+        </div>
+      </div>
+      <div class="animate-on-scroll delay-5 relative">
+        <div class="timeline-dot" style="background:#f59e0b; box-shadow:0 0 8px rgba(245,158,11,0.6)"></div>
+        <div class="hover-card card-gradient rounded-xl p-6 bg-surface-1/80">
+          <span class="text-xs font-mono text-amber-400 tracking-wider">1946</span>
+          <h3 class="text-lg font-semibold mt-2">Fundación de la IHF</h3>
+          <p class="text-sm text-neutral-400 mt-2 leading-relaxed">Se estableció la Federación Internacional de Balonmano (IHF), reemplazando a la IAHF y reflejando la creciente presencia internacional del deporte.</p>
+        </div>
+      </div>
+      <div class="animate-on-scroll relative">
+        <div class="timeline-dot" style="background:#ef4444; box-shadow:0 0 8px rgba(239,68,68,0.6)"></div>
+        <div class="hover-card card-gradient rounded-xl p-6 bg-surface-1/80">
+          <span class="text-xs font-mono text-red-400 tracking-wider">1972 — PRESENTE</span>
+          <h3 class="text-lg font-semibold mt-2">Deporte Olímpico Oficial y Crecimiento Global</h3>
+          <p class="text-sm text-neutral-400 mt-2 leading-relaxed">El balonmano se incluyó oficialmente en el programa olímpico en 1972. Hoy cuenta con unos 19 millones de jugadores en todo el mundo, evolucionando del formato exterior de 11 al formato interior de 7 jugadores.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="rules" class="py-24 px-4 relative">
+  <div class="max-w-5xl mx-auto">
+    <div class="animate-on-scroll mb-16">
+      <span class="text-xs font-semibold text-purple-400 uppercase tracking-widest">Capítulo 02</span>
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight mt-3 gradient-text">Reglas y Juego</h2>
+      <p class="text-neutral-400 mt-4 max-w-2xl leading-relaxed">El balonmano se rige por una serie de reglas que dictan la estructura del juego, la conducta de los jugadores y la mecánica general, asegurando un entorno competitivo y justo.</p>
+    </div>
+    <div class="flex flex-wrap gap-2 mb-8" role="tablist" aria-label="Categorías de reglas">
+      <button class="tab-btn active px-4 py-2 text-xs font-medium rounded-lg border border-white/10" role="tab" aria-selected="true" data-tab="match" aria-controls="tab-match">Estructura del Partido</button>
+      <button class="tab-btn px-4 py-2 text-xs font-medium rounded-lg border border-white/10 text-neutral-400" role="tab" aria-selected="false" data-tab="handling" aria-controls="tab-handling">Manejo del Balón</button>
+      <button class="tab-btn px-4 py-2 text-xs font-medium rounded-lg border border-white/10 text-neutral-400" role="tab" aria-selected="false" data-tab="scoring" aria-controls="tab-scoring">Puntuación</button>
+      <button class="tab-btn px-4 py-2 text-xs font-medium rounded-lg border border-white/10 text-neutral-400" role="tab" aria-selected="false" data-tab="conduct" aria-controls="tab-conduct">Conducta y Faltas</button>
+      <button class="tab-btn px-4 py-2 text-xs font-medium rounded-lg border border-white/10 text-neutral-400" role="tab" aria-selected="false" data-tab="changes" aria-controls="tab-changes">Cambios de Reglas</button>
+    </div>
+
+    <div id="tab-match" class="tab-panel" role="tabpanel">
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="hover-card card-gradient rounded-xl p-8 bg-surface-1/80">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-cyan-400/10 flex items-center justify-center"><iconify-icon icon="lucide:timer" width="20" height="20" class="text-cyan-400"></iconify-icon></div>
+            <h3 class="text-lg font-semibold">Duración del Partido</h3>
+          </div>
+          <ul class="space-y-3 text-sm text-neutral-400">
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-cyan-400 mt-0.5 shrink-0"></iconify-icon>Dos tiempos de 30 minutos cada uno</li>
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-cyan-400 mt-0.5 shrink-0"></iconify-icon>Descanso de 10 a 15 minutos</li>
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-cyan-400 mt-0.5 shrink-0"></iconify-icon>El juego comienza con un salto de dos en el centro</li>
+          </ul>
+        </div>
+        <div class="hover-card card-gradient rounded-xl p-8 bg-surface-1/80">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-purple-400/10 flex items-center justify-center"><iconify-icon icon="lucide:users" width="20" height="20" class="text-purple-400"></iconify-icon></div>
+            <h3 class="text-lg font-semibold">Composición del Equipo</h3>
+          </div>
+          <ul class="space-y-3 text-sm text-neutral-400">
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-purple-400 mt-0.5 shrink-0"></iconify-icon>Seis jugadores: cinco de campo + un portero</li>
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-purple-400 mt-0.5 shrink-0"></iconify-icon>Equipos mixtos: al menos dos jugadoras en cancha (excl. portero)</li>
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-purple-400 mt-0.5 shrink-0"></iconify-icon>Se permiten sustituciones a lo largo del partido</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-handling" class="tab-panel hidden" role="tabpanel">
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="hover-card card-gradient rounded-xl p-8 bg-surface-1/80">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-blue-400/10 flex items-center justify-center"><iconify-icon icon="lucide:hand" width="20" height="20" class="text-blue-400"></iconify-icon></div>
+            <h3 class="text-lg font-semibold">Reglas de Posesión</h3>
+          </div>
+          <ul class="space-y-3 text-sm text-neutral-400">
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-blue-400 mt-0.5 shrink-0"></iconify-icon>Máximo 5 segundos reteniendo el balón bajo marcaje cercano</li>
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-blue-400 mt-0.5 shrink-0"></iconify-icon>Hasta 3 pasos antes de pasar o lanzar</li>
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-blue-400 mt-0.5 shrink-0"></iconify-icon>Se puede botar una vez antes de necesitar pasar o lanzar</li>
+          </ul>
+        </div>
+        <div class="hover-card card-gradient rounded-xl p-8 bg-surface-1/80">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-emerald-400/10 flex items-center justify-center"><iconify-icon icon="lucide:move" width="20" height="20" class="text-emerald-400"></iconify-icon></div>
+            <h3 class="text-lg font-semibold">Contacto Permitido con el Balón</h3>
+          </div>
+          <ul class="space-y-3 text-sm text-neutral-400">
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-emerald-400 mt-0.5 shrink-0"></iconify-icon>Atrapar, empujar o golpear con manos, pecho, cabeza, rodillas</li>
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:x" width="16" height="16" class="text-red-400 mt-0.5 shrink-0"></iconify-icon>No se pueden usar las piernas por debajo de la rodilla</li>
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-emerald-400 mt-0.5 shrink-0"></iconify-icon>El bote está permitido con restricciones</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-scoring" class="tab-panel hidden" role="tabpanel">
+      <div class="hover-card card-gradient rounded-xl p-8 bg-surface-1/80">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg bg-amber-400/10 flex items-center justify-center"><iconify-icon icon="lucide:target" width="20" height="20" class="text-amber-400"></iconify-icon></div>
+          <h3 class="text-lg font-semibold">Reglas de Puntuación y Posesión</h3>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-6 mt-4">
+          <div>
+            <h4 class="text-sm font-semibold text-amber-400 mb-3">Puntuación</h4>
+            <ul class="space-y-3 text-sm text-neutral-400">
+              <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-amber-400 mt-0.5 shrink-0"></iconify-icon>Gol cuando todo el balón cruza la línea de gol</li>
+              <li class="flex items-start gap-2"><iconify-icon icon="lucide:x" width="16" height="16" class="text-red-400 mt-0.5 shrink-0"></iconify-icon>El cruce parcial detenido por el portero no cuenta</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-sm font-semibold text-cyan-400 mb-3">Balón Fuera</h4>
+            <ul class="space-y-3 text-sm text-neutral-400">
+              <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-cyan-400 mt-0.5 shrink-0"></iconify-icon>Posesión para el equipo contrario en el punto de salida</li>
+              <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-cyan-400 mt-0.5 shrink-0"></iconify-icon>El saque de banda debe pasarse antes de lanzar a puerta</li>
+              <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-cyan-400 mt-0.5 shrink-0"></iconify-icon>Defensas a 3 pies de distancia del sacador</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-conduct" class="tab-panel hidden" role="tabpanel">
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="hover-card card-gradient rounded-xl p-8 bg-surface-1/80">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-red-400/10 flex items-center justify-center"><iconify-icon icon="lucide:alert-triangle" width="20" height="20" class="text-red-400"></iconify-icon></div>
+            <h3 class="text-lg font-semibold">Faltas y Sanciones</h3>
+          </div>
+          <ul class="space-y-3 text-sm text-neutral-400">
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-red-400 mt-0.5 shrink-0"></iconify-icon>Se limita el pase excesivo del equipo atacante</li>
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-red-400 mt-0.5 shrink-0"></iconify-icon>Pases máximos antes de tiro libre reducidos de 6 a 4</li>
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-red-400 mt-0.5 shrink-0"></iconify-icon>Golpear al portero en la cabeza en lanzamiento de 7m = 2 min de suspensión</li>
+          </ul>
+        </div>
+        <div class="hover-card card-gradient rounded-xl p-8 bg-surface-1/80">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-orange-400/10 flex items-center justify-center"><iconify-icon icon="lucide:shield-alert" width="20" height="20" class="text-orange-400"></iconify-icon></div>
+            <h3 class="text-lg font-semibold">Reglas de Seguridad</h3>
+          </div>
+          <ul class="space-y-3 text-sm text-neutral-400">
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-orange-400 mt-0.5 shrink-0"></iconify-icon>Las reglas promueven el juego limpio y la seguridad del jugador</li>
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-orange-400 mt-0.5 shrink-0"></iconify-icon>Protocolos de lesión cerebral estrictamente aplicados</li>
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-orange-400 mt-0.5 shrink-0"></iconify-icon>Enmiendas continuas para mejorar la seguridad</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-changes" class="tab-panel hidden" role="tabpanel">
+      <div class="hover-card card-gradient rounded-xl p-8 bg-surface-1/80">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg bg-cyan-400/10 flex items-center justify-center"><iconify-icon icon="lucide:refresh-cw" width="20" height="20" class="text-cyan-400"></iconify-icon></div>
+          <h3 class="text-lg font-semibold">Cambios de Reglas y Desarrollos Futuros</h3>
+        </div>
+        <div class="mt-4 space-y-4 text-sm text-neutral-400 leading-relaxed">
+          <p>La Federación Internacional de Balonmano (IHF) actualiza continuamente las reglas para hacer el deporte más atractivo y justo. Los desarrollos clave incluyen:</p>
+          <div class="grid sm:grid-cols-3 gap-4 mt-4">
+            <div class="p-4 rounded-lg bg-white/5 border border-white/5">
+              <div class="text-2xl font-semibold text-cyan-400 mb-1">3</div>
+              <div class="text-xs text-neutral-500 uppercase tracking-wider">Libros de Reglas</div>
+              <p class="text-xs text-neutral-400 mt-2">Creados y accesibles mediante una app para jugadores, entrenadores y árbitros</p>
+            </div>
+            <div class="p-4 rounded-lg bg-white/5 border border-white/5">
+              <div class="text-2xl font-semibold text-purple-400 mb-1">4</div>
+              <div class="text-xs text-neutral-500 uppercase tracking-wider">Límite de Pases</div>
+              <p class="text-xs text-neutral-400 mt-2">Reducido de 6 a 4 pases máximos antes de un tiro libre</p>
+            </div>
+            <div class="p-4 rounded-lg bg-white/5 border border-white/5">
+              <div class="text-2xl font-semibold text-blue-400 mb-1">2'</div>
+              <div class="text-xs text-neutral-500 uppercase tracking-wider">Suspensión</div>
+              <p class="text-xs text-neutral-400 mt-2">Por golpear al portero en la cabeza durante lanzamiento de 7m</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="equipment" class="py-24 px-4 relative">
+  <div class="max-w-5xl mx-auto">
+    <div class="animate-on-scroll mb-16">
+      <span class="text-xs font-semibold text-blue-400 uppercase tracking-widest">Capítulo 03</span>
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight mt-3 gradient-text">Equipamiento</h2>
+      <p class="text-neutral-400 mt-4 max-w-2xl leading-relaxed">El balonmano se juega con equipamiento específico diseñado para facilitar la naturaleza rápida del deporte.</p>
+    </div>
+    <div class="grid lg:grid-cols-2 gap-8">
+      <div class="animate-on-scroll delay-1 hover-card card-gradient rounded-xl p-8 bg-surface-1/80">
+        <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+          <iconify-icon icon="lucide:maximize" width="18" height="18" class="text-cyan-400"></iconify-icon>
+          Especificaciones de la Pista
+        </h3>
+        <div class="flex justify-center">
+          <svg viewBox="0 0 420 240" class="w-full max-w-md" role="img" aria-label="Diagrama de la pista de balonmano mostrando una pista de 40m x 20m con porterías y áreas de 6 metros">
+            <rect x="10" y="10" width="400" height="220" rx="4" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+            <line x1="210" y1="10" x2="210" y2="230" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" stroke-dasharray="6,4"/>
+            <circle cx="210" cy="120" r="20" fill="none" stroke="rgba(34,211,238,0.4)" stroke-width="1.5"/>
+            <path d="M 10 80 A 50 50 0 0 1 10 160" fill="rgba(34,211,238,0.05)" stroke="rgba(34,211,238,0.4)" stroke-width="1.5"/>
+            <line x1="10" y1="80" x2="10" y2="160" stroke="rgba(34,211,238,0.4)" stroke-width="1.5"/>
+            <path d="M 410 80 A 50 50 0 0 0 410 160" fill="rgba(168,85,247,0.05)" stroke="rgba(168,85,247,0.4)" stroke-width="1.5"/>
+            <line x1="410" y1="80" x2="410" y2="160" stroke="rgba(168,85,247,0.4)" stroke-width="1.5"/>
+            <rect x="2" y="96" width="8" height="48" rx="2" fill="rgba(34,211,238,0.3)" stroke="#22d3ee" stroke-width="2"/>
+            <rect x="410" y="96" width="8" height="48" rx="2" fill="rgba(168,85,247,0.3)" stroke="#a855f7" stroke-width="2"/>
+            <line x1="56" y1="115" x2="56" y2="125" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+            <line x1="364" y1="115" x2="364" y2="125" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+            <path d="M 76 76 A 60 60 0 0 1 76 164" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="4,3"/>
+            <path d="M 344 76 A 60 60 0 0 0 344 164" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="4,3"/>
+            <text x="210" y="6" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9" font-family="JetBrains Mono, monospace">40m</text>
+            <text x="418" y="124" text-anchor="start" fill="rgba(255,255,255,0.5)" font-size="9" font-family="JetBrains Mono, monospace" transform="rotate(90,418,124)">20m</text>
+            <text x="24" y="124" text-anchor="middle" fill="#22d3ee" font-size="7" font-family="JetBrains Mono, monospace">6m</text>
+            <text x="56" y="112" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="7" font-family="JetBrains Mono, monospace">7m</text>
+            <text x="394" y="124" text-anchor="middle" fill="#a855f7" font-size="7" font-family="JetBrains Mono, monospace">6m</text>
+          </svg>
+        </div>
+        <div class="grid grid-cols-2 gap-3 mt-6">
+          <div class="p-3 rounded-lg bg-white/5"><div class="text-xs text-neutral-500 uppercase tracking-wider">Dimensiones</div><div class="text-sm font-semibold mt-1">40m × 20m</div></div>
+          <div class="p-3 rounded-lg bg-white/5"><div class="text-xs text-neutral-500 uppercase tracking-wider">Tamaño de Portería</div><div class="text-sm font-semibold mt-1">3m × 2m</div></div>
+          <div class="p-3 rounded-lg bg-white/5"><div class="text-xs text-neutral-500 uppercase tracking-wider">Área de Portería</div><div class="text-sm font-semibold mt-1">Zona D de 6m</div></div>
+          <div class="p-3 rounded-lg bg-white/5"><div class="text-xs text-neutral-500 uppercase tracking-wider">Línea de 7m</div><div class="text-sm font-semibold mt-1">Marca de penalti</div></div>
+        </div>
+      </div>
+      <div class="space-y-6">
+        <div class="animate-on-scroll delay-2 hover-card card-gradient rounded-xl p-8 bg-surface-1/80">
+          <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+            <iconify-icon icon="lucide:circle" width="18" height="18" class="text-purple-400"></iconify-icon>
+            El Balón
+          </h3>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="p-4 rounded-lg bg-cyan-400/5 border border-cyan-400/10">
+              <div class="text-xs text-cyan-400 uppercase tracking-wider mb-2">Masculino</div>
+              <div class="text-sm text-neutral-300">58–60 cm circunferencia</div>
+              <div class="text-sm text-neutral-300">425–475 g de peso</div>
+            </div>
+            <div class="p-4 rounded-lg bg-purple-400/5 border border-purple-400/10">
+              <div class="text-xs text-purple-400 uppercase tracking-wider mb-2">Femenino</div>
+              <div class="text-sm text-neutral-300">54–56 cm circunferencia</div>
+              <div class="text-sm text-neutral-300">325–375 g de peso</div>
+            </div>
+          </div>
+          <p class="text-xs text-neutral-500 mt-3">Material: cuero sintético o goma para agarre y durabilidad óptimos</p>
+        </div>
+        <div class="animate-on-scroll delay-3 hover-card card-gradient rounded-xl p-8 bg-surface-1/80">
+          <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+            <iconify-icon icon="lucide:backpack" width="18" height="18" class="text-blue-400"></iconify-icon>
+            Equipamiento Adicional
+          </h3>
+          <ul class="space-y-3 text-sm text-neutral-400">
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-blue-400 mt-0.5 shrink-0"></iconify-icon>Zapatillas especializadas para agarre y soporte</li>
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-blue-400 mt-0.5 shrink-0"></iconify-icon>Guantes acolchados y protección para el portero</li>
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-blue-400 mt-0.5 shrink-0"></iconify-icon>Escaleras de agilidad y dispositivos de reacción</li>
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-blue-400 mt-0.5 shrink-0"></iconify-icon>Herramientas de entrenamiento de velocidad y control</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="types" class="py-24 px-4 relative">
+  <div class="max-w-5xl mx-auto">
+    <div class="animate-on-scroll mb-16">
+      <span class="text-xs font-semibold text-emerald-400 uppercase tracking-widest">Capítulo 04</span>
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight mt-3 gradient-text">Tipos de Balonmano</h2>
+      <p class="text-neutral-400 mt-4 max-w-2xl leading-relaxed">El balonmano se juega en varios formatos, cada uno con características, reglas y entornos distintos.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="animate-on-scroll delay-1 hover-card card-gradient rounded-xl bg-surface-1/80 overflow-hidden group">
+        <div class="h-48 bg-gradient-to-br from-cyan-500/20 to-blue-600/20 flex items-center justify-center relative overflow-hidden">
+          <div class="absolute inset-0 grid-bg opacity-30"></div>
+          <svg viewBox="0 0 120 80" class="w-32 relative z-10 group-hover:scale-110 transition-transform duration-500">
+            <rect x="5" y="5" width="110" height="70" rx="3" fill="none" stroke="#22d3ee" stroke-width="1.5" opacity="0.6"/>
+            <line x1="60" y1="5" x2="60" y2="75" stroke="#22d3ee" stroke-width="1" opacity="0.4"/>
+            <circle cx="60" cy="40" r="8" fill="none" stroke="#22d3ee" stroke-width="1" opacity="0.5"/>
+            <rect x="0" y="28" width="5" height="24" rx="1" fill="#22d3ee" opacity="0.4"/>
+            <rect x="115" y="28" width="5" height="24" rx="1" fill="#22d3ee" opacity="0.4"/>
+          </svg>
+        </div>
+        <div class="p-6">
+          <span class="inline-block px-2 py-1 rounded text-[10px] font-medium bg-cyan-400/10 text-cyan-400 uppercase tracking-wider mb-3">Más Popular</span>
+          <h3 class="text-lg font-semibold mb-2">Balonmano Interior</h3>
+          <ul class="space-y-2 text-sm text-neutral-400">
+            <li>• 7 jugadores por equipo (6 campo + 1 POR)</li>
+            <li>• Pista de 40m × 20m</li>
+            <li>• 2 × tiempos de 30 minutos</li>
+            <li>• Regido por la IHF</li>
+          </ul>
+        </div>
+      </div>
+      <div class="animate-on-scroll delay-2 hover-card card-gradient rounded-xl bg-surface-1/80 overflow-hidden group">
+        <div class="h-48 bg-gradient-to-br from-amber-500/20 to-orange-600/20 flex items-center justify-center relative overflow-hidden">
+          <div class="absolute inset-0" style="background-image: radial-gradient(circle, rgba(245,158,11,0.1) 1px, transparent 1px); background-size: 8px 8px;"></div>
+          <svg viewBox="0 0 120 80" class="w-32 relative z-10 group-hover:scale-110 transition-transform duration-500">
+            <rect x="10" y="10" width="100" height="60" rx="15" fill="none" stroke="#f59e0b" stroke-width="1.5" opacity="0.6"/>
+            <line x1="60" y1="10" x2="60" y2="70" stroke="#f59e0b" stroke-width="1" opacity="0.4"/>
+            <circle cx="60" cy="40" r="6" fill="none" stroke="#f59e0b" stroke-width="1" opacity="0.5"/>
+            <text x="60" y="82" text-anchor="middle" fill="#f59e0b" font-size="8" opacity="0.5" font-family="Inter">ARENA</text>
+          </svg>
+        </div>
+        <div class="p-6">
+          <span class="inline-block px-2 py-1 rounded text-[10px] font-medium bg-amber-400/10 text-amber-400 uppercase tracking-wider mb-3">Nuevo Formato</span>
+          <h3 class="text-lg font-semibold mb-2">Balonmano Playa</h3>
+          <ul class="space-y-2 text-sm text-neutral-400">
+            <li>• 4 jugadores por equipo (3 campo + 1 POR)</li>
+            <li>• Pista de arena de 27m × 12m</li>
+            <li>• Goles espectaculares = puntos extra</li>
+            <li>• Juego acrobático y rápido</li>
+          </ul>
+        </div>
+      </div>
+      <div class="animate-on-scroll delay-3 hover-card card-gradient rounded-xl bg-surface-1/80 overflow-hidden group">
+        <div class="h-48 bg-gradient-to-br from-purple-500/20 to-pink-600/20 flex items-center justify-center relative overflow-hidden">
+          <div class="absolute inset-0 grid-bg opacity-20" style="background-size:2rem 2rem;"></div>
+          <svg viewBox="0 0 120 80" class="w-32 relative z-10 group-hover:scale-110 transition-transform duration-500">
+            <rect x="15" y="15" width="35" height="50" rx="3" fill="none" stroke="#a855f7" stroke-width="1.5" opacity="0.6"/>
+            <rect x="70" y="15" width="35" height="50" rx="3" fill="none" stroke="#ec4899" stroke-width="1.5" opacity="0.6"/>
+            <circle cx="32" cy="40" r="3" fill="#a855f7" opacity="0.5"/>
+            <circle cx="87" cy="40" r="3" fill="#ec4899" opacity="0.5"/>
+            <text x="60" y="8" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="7" font-family="Inter">+</text>
+          </svg>
+        </div>
+        <div class="p-6">
+          <span class="inline-block px-2 py-1 rounded text-[10px] font-medium bg-purple-400/10 text-purple-400 uppercase tracking-wider mb-3">Variaciones</span>
+          <h3 class="text-lg font-semibold mb-2">Otros Formatos</h3>
+          <ul class="space-y-2 text-sm text-neutral-400">
+            <li>• Minibalonmano para los más jóvenes</li>
+            <li>• Balonmano callejero para juego informal</li>
+            <li>• Pistas más pequeñas adaptadas a la edad</li>
+            <li>• Reglas modificadas para mayor participación</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="competitions" class="py-24 px-4 relative">
+  <div class="max-w-5xl mx-auto">
+    <div class="animate-on-scroll mb-16">
+      <span class="text-xs font-semibold text-amber-400 uppercase tracking-widest">Capítulo 05</span>
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight mt-3 gradient-text">Competiciones Internacionales</h2>
+      <p class="text-neutral-400 mt-4 max-w-2xl leading-relaxed">El balonmano aparece en varias competiciones internacionales prominentes, que contribuyen a su reconocimiento y popularidad mundial.</p>
+    </div>
+    <div class="space-y-6">
+      <div class="animate-on-scroll hover-card card-gradient rounded-xl p-8 bg-surface-1/80">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400/20 to-yellow-600/20 flex items-center justify-center"><iconify-icon icon="lucide:medal" width="24" height="24" class="text-amber-400"></iconify-icon></div>
+          <div><h3 class="text-xl font-semibold">Juegos Olímpicos</h3><p class="text-xs text-neutral-500">La cúspide del deporte internacional</p></div>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="p-4 rounded-lg bg-white/5 border border-white/5">
+            <div class="text-xs text-amber-400 font-mono">1936</div>
+            <div class="text-sm font-medium mt-1">Berlín</div>
+            <div class="text-xs text-neutral-500 mt-1">Evento de demostración masculino. Alemania ganó el oro contra Austria.</div>
+          </div>
+          <div class="p-4 rounded-lg bg-white/5 border border-white/5">
+            <div class="text-xs text-amber-400 font-mono">1972</div>
+            <div class="text-sm font-medium mt-1">Inclusión Oficial</div>
+            <div class="text-xs text-neutral-500 mt-1">Balonmano masculino añadido oficialmente al programa olímpico.</div>
+          </div>
+          <div class="p-4 rounded-lg bg-white/5 border border-white/5">
+            <div class="text-xs text-amber-400 font-mono">1976</div>
+            <div class="text-sm font-medium mt-1">Montreal</div>
+            <div class="text-xs text-neutral-500 mt-1">Debut femenino. La Unión Soviética logró el primer oro femenino.</div>
+          </div>
+          <div class="p-4 rounded-lg bg-white/5 border border-white/5">
+            <div class="text-xs text-amber-400 font-mono">2008</div>
+            <div class="text-sm font-medium mt-1">Pekín</div>
+            <div class="text-xs text-neutral-500 mt-1">12 equipos internacionales compitieron en cada categoría.</div>
+          </div>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="animate-on-scroll delay-1 hover-card card-gradient rounded-xl p-8 bg-surface-1/80">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-cyan-400/10 flex items-center justify-center"><iconify-icon icon="lucide:globe" width="20" height="20" class="text-cyan-400"></iconify-icon></div>
+            <h3 class="text-lg font-semibold">Campeonatos Mundiales</h3>
+          </div>
+          <ul class="space-y-3 text-sm text-neutral-400">
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-cyan-400 mt-0.5 shrink-0"></iconify-icon>Organizados por la IHF desde 1938</li>
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-cyan-400 mt-0.5 shrink-0"></iconify-icon>Competición femenina comenzó en 1957</li>
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-cyan-400 mt-0.5 shrink-0"></iconify-icon>Celebrados cada dos años desde los 90</li>
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-cyan-400 mt-0.5 shrink-0"></iconify-icon>Transición a pista interior desde los 60</li>
+          </ul>
+        </div>
+        <div class="animate-on-scroll delay-2 hover-card card-gradient rounded-xl p-8 bg-surface-1/80">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-purple-400/10 flex items-center justify-center"><iconify-icon icon="lucide:map" width="20" height="20" class="text-purple-400"></iconify-icon></div>
+            <h3 class="text-lg font-semibold">Campeonatos Continentales</h3>
+          </div>
+          <ul class="space-y-3 text-sm text-neutral-400">
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-purple-400 mt-0.5 shrink-0"></iconify-icon>Liga de Campeones EHF — el torneo de clubes más prestigioso</li>
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-purple-400 mt-0.5 shrink-0"></iconify-icon>Europa es el bastión tradicional</li>
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-purple-400 mt-0.5 shrink-0"></iconify-icon>Creciente presencia en Asia, Sudamérica y África</li>
+            <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-purple-400 mt-0.5 shrink-0"></iconify-icon>Competiciones regionales de alto nivel</li>
+          </ul>
+        </div>
+      </div>
+      <div class="animate-on-scroll hover-card card-gradient rounded-xl p-8 bg-surface-1/80 border border-cyan-400/10">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg bg-cyan-400/10 flex items-center justify-center pulse-glow"><iconify-icon icon="lucide:sparkles" width="20" height="20" class="text-cyan-400"></iconify-icon></div>
+          <div><h3 class="text-lg font-semibold">Nuevos Desarrollos en las Reglas de Competición</h3><p class="text-xs text-neutral-500">Actualización de Reglas de 2022</p></div>
+        </div>
+        <p class="text-sm text-neutral-400 leading-relaxed">En 2022, la IHF implementó nuevas reglas destinadas a mejorar el atractivo y la seguridad del deporte. El primer torneo en aplicar estas reglas fue el Campeonato Mundial Juvenil (U20) Femenino celebrado en Eslovenia. La IHF también está desarrollando Libros de Reglas completos accesibles a través de una aplicación para ayudar a aclarar las regulaciones entre los actores del balonmano a nivel mundial.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="culture" class="py-24 px-4 relative">
+  <div class="max-w-5xl mx-auto">
+    <div class="animate-on-scroll mb-16">
+      <span class="text-xs font-semibold text-pink-400 uppercase tracking-widest">Capítulo 06</span>
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight mt-3 gradient-text">Cultura del Balonmano</h2>
+      <p class="text-neutral-400 mt-4 max-w-2xl leading-relaxed">Una compleja interacción de estrategia, tácticas y comunidad que ha evolucionado junto con el deporte.</p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="animate-on-scroll delay-1 hover-card card-gradient rounded-xl p-8 bg-surface-1/80">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg bg-pink-400/10 flex items-center justify-center"><iconify-icon icon="lucide:brain" width="20" height="20" class="text-pink-400"></iconify-icon></div>
+          <h3 class="text-lg font-semibold">Estrategia vs Tácticas</h3>
+        </div>
+        <div class="space-y-4 mt-4">
+          <div class="p-4 rounded-lg bg-cyan-400/5 border-l-2 border-cyan-400">
+            <div class="text-sm font-semibold text-cyan-400">Estrategia</div>
+            <p class="text-xs text-neutral-400 mt-1">Proactiva — se centra en mejorar el valor del equipo a través de una planificación y ejecución cuidadosas.</p>
+          </div>
+          <div class="p-4 rounded-lg bg-purple-400/5 border-l-2 border-purple-400">
+            <div class="text-sm font-semibold text-purple-400">Tácticas</div>
+            <p class="text-xs text-neutral-400 mt-1">Reactivas — dependen del contexto inmediato del partido, incluyendo las fortalezas y debilidades del oponente.</p>
+          </div>
+        </div>
+      </div>
+      <div class="animate-on-scroll delay-2 hover-card card-gradient rounded-xl p-8 bg-surface-1/80">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg bg-blue-400/10 flex items-center justify-center"><iconify-icon icon="lucide:globe-2" width="20" height="20" class="text-blue-400"></iconify-icon></div>
+          <h3 class="text-lg font-semibold">Atractivo Global</h3>
+        </div>
+        <ul class="space-y-3 text-sm text-neutral-400">
+          <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-blue-400 mt-0.5 shrink-0"></iconify-icon>Predominantemente popular en Europa</li>
+          <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-blue-400 mt-0.5 shrink-0"></iconify-icon>Creciente en Asia y Sudamérica</li>
+          <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-blue-400 mt-0.5 shrink-0"></iconify-icon>~19 millones de jugadores globalmente</li>
+          <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-blue-400 mt-0.5 shrink-0"></iconify-icon>Mayor visibilidad a través de TV y medios digitales</li>
+        </ul>
+      </div>
+      <div class="animate-on-scroll delay-3 hover-card card-gradient rounded-xl p-8 bg-surface-1/80">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg bg-emerald-400/10 flex items-center justify-center"><iconify-icon icon="lucide:star" width="20" height="20" class="text-emerald-400"></iconify-icon></div>
+          <h3 class="text-lg font-semibold">Jugadores Destacados</h3>
+        </div>
+        <div class="space-y-3 text-sm text-neutral-400">
+          <div class="p-3 rounded-lg bg-white/5">
+            <div class="font-medium text-white text-sm">Perry, Gilmartin y los Hermanos Hasset</div>
+            <div class="text-xs text-neutral-500">Figuras dominantes en los años 30, estableciendo récords</div>
+          </div>
+          <div class="p-3 rounded-lg bg-white/5">
+            <div class="font-medium text-white text-sm">David Browning</div>
+            <div class="text-xs text-neutral-500">Destacado por sus habilidades y versatilidad en múltiples deportes</div>
+          </div>
+        </div>
+      </div>
+      <div class="animate-on-scroll delay-4 hover-card card-gradient rounded-xl p-8 bg-surface-1/80">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg bg-amber-400/10 flex items-center justify-center"><iconify-icon icon="lucide:trending-up" width="20" height="20" class="text-amber-400"></iconify-icon></div>
+          <h3 class="text-lg font-semibold">Tendencias Recientes</h3>
+        </div>
+        <ul class="space-y-3 text-sm text-neutral-400">
+          <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-amber-400 mt-0.5 shrink-0"></iconify-icon>Creciente profesionalización del deporte</li>
+          <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-amber-400 mt-0.5 shrink-0"></iconify-icon>La cohesión de equipo juega un papel crítico en el rendimiento</li>
+          <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-amber-400 mt-0.5 shrink-0"></iconify-icon>Estrategias de entrenamiento y avances tecnológicos impulsan el éxito</li>
+          <li class="flex items-start gap-2"><iconify-icon icon="lucide:check" width="16" height="16" class="text-amber-400 mt-0.5 shrink-0"></iconify-icon>Asociación Irlandesa de Balonmano Aficionado fundada en 1924</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="strategy" class="py-24 px-4 relative">
+  <div class="max-w-5xl mx-auto">
+    <div class="animate-on-scroll mb-16">
+      <span class="text-xs font-semibold text-red-400 uppercase tracking-widest">Capítulo 07</span>
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight mt-3 gradient-text">Estrategias y Técnicas</h2>
+      <p class="text-neutral-400 mt-4 max-w-2xl leading-relaxed">Los regímenes de entrenamiento efectivos son cruciales para desarrollar un jugador completo capaz de ejecutar planes de juego complejos bajo presión.</p>
+    </div>
+    <div class="grid lg:grid-cols-2 gap-8 mb-12">
+      <div class="animate-on-scroll delay-1 hover-card card-gradient rounded-xl p-8 bg-surface-1/80">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-lg bg-emerald-400/10 flex items-center justify-center"><iconify-icon icon="lucide:swords" width="20" height="20" class="text-emerald-400"></iconify-icon></div>
+          <h3 class="text-lg font-semibold">Estrategias Ofensivas</h3>
+        </div>
+        <div class="mb-6">
+          <svg viewBox="0 0 400 200" class="w-full" role="img" aria-label="Diagrama de formación ofensiva mostrando posiciones de los jugadores">
+            <rect x="10" y="10" width="380" height="180" rx="4" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            <rect x="0" y="75" width="10" height="50" rx="2" fill="rgba(16,185,129,0.3)" stroke="#10b981" stroke-width="1.5"/>
+            <path d="M 40 60 A 40 40 0 0 1 40 140" fill="rgba(16,185,129,0.05)" stroke="rgba(16,185,129,0.2)" stroke-width="1"/>
+            <line x1="40" y1="60" x2="40" y2="140" stroke="rgba(16,185,129,0.2)" stroke-width="1"/>
+            <circle cx="100" cy="50" r="8" fill="rgba(16,185,129,0.8)"/><text x="100" y="54" text-anchor="middle" fill="white" font-size="8" font-weight="600">EI</text>
+            <circle cx="80" cy="100" r="8" fill="rgba(16,185,129,0.8)"/><text x="80" y="104" text-anchor="middle" fill="white" font-size="8" font-weight="600">LI</text>
+            <circle cx="100" cy="150" r="8" fill="rgba(16,185,129,0.8)"/><text x="100" y="154" text-anchor="middle" fill="white" font-size="8" font-weight="600">ED</text>
+            <circle cx="140" cy="100" r="8" fill="rgba(16,185,129,0.8)"/><text x="140" y="104" text-anchor="middle" fill="white" font-size="8" font-weight="600">CE</text>
+            <circle cx="110" cy="70" r="8" fill="rgba(16,185,129,0.8)"/><text x="110" y="74" text-anchor="middle" fill="white" font-size="8" font-weight="600">LD</text>
+            <circle cx="55" cy="70" r="7" fill="rgba(239,68,68,0.6)"/>
+            <circle cx="55" cy="100" r="7" fill="rgba(239,68,68,0.6)"/>
+            <circle cx="55" cy="130" r="7" fill="rgba(239,68,68,0.6)"/>
+            <rect x="4" y="85" width="6" height="30" rx="2" fill="rgba(245,158,11,0.7)"/>
+            <line x1="140" y1="93" x2="55" y2="100" stroke="rgba(16,185,129,0.5)" stroke-width="1.5" marker-end="url(#arrowG)"/>
+            <defs><marker id="arrowG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="rgba(16,185,129,0.5)"/></marker></defs>
+          </svg>
+        </div>
+        <ul class="space-y-3 text-sm text-neutral-400">
+          <li class="flex items-start gap-2"><iconify-icon icon="lucide:zap" width="16" height="16" class="text-emerald-400 mt-0.5 shrink-0"></iconify-icon>Los contraataques son más efectivos que los ataques posicionales</li>
+          <li class="flex items-start gap-2"><iconify-icon icon="lucide:zap" width="16" height="16" class="text-emerald-400 mt-0.5 shrink-0"></iconify-icon>Las transiciones rápidas aprovechan defensas desorganizadas</li>
+          <li class="flex items-start gap-2"><iconify-icon icon="lucide:zap" width="16" height="16" class="text-emerald-400 mt-0.5 shrink-0"></iconify-icon>Movilidad y circulación de balón mantienen la velocidad</li>
+          <li class="flex items-start gap-2"><iconify-icon icon="lucide:zap" width="16" height="16" class="text-emerald-400 mt-0.5 shrink-0"></iconify-icon>Lanzar desde zonas cercanas a la portería es más eficaz</li>
+        </ul>
+      </div>
+      <div class="animate-on-scroll delay-2 hover-card card-gradient rounded-xl p-8 bg-surface-1/80">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-lg bg-red-400/10 flex items-center justify-center"><iconify-icon icon="lucide:shield" width="20" height="20" class="text-red-400"></iconify-icon></div>
+          <h3 class="text-lg font-semibold">Estrategias Defensivas</h3>
+        </div>
+        <div class="mb-6">
+          <svg viewBox="0 0 400 200" class="w-full" role="img" aria-label="Diagrama de formación defensiva">
+            <rect x="10" y="10" width="380" height="180" rx="4" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            <rect x="0" y="75" width="10" height="50" rx="2" fill="rgba(16,185,129,0.3)" stroke="#10b981" stroke-width="1.5"/>
+            <path d="M 40 60 A 40 40 0 0 1 40 140" fill="rgba(239,68,68,0.05)" stroke="rgba(239,68,68,0.2)" stroke-width="1"/>
+            <line x1="40" y1="60" x2="40" y2="140" stroke="rgba(239,68,68,0.2)" stroke-width="1"/>
+            <circle cx="55" cy="50" r="8" fill="rgba(239,68,68,0.8)"/>
+            <circle cx="50" cy="80" r="8" fill="rgba(239,68,68,0.8)"/>
+            <circle cx="50" cy="110" r="8" fill="rgba(239,68,68,0.8)"/>
+            <circle cx="55" cy="140" r="8" fill="rgba(239,68,68,0.8)"/>
+            <circle cx="60" cy="100" r="8" fill="rgba(239,68,68,0.8)"/>
+            <circle cx="75" cy="100" r="8" fill="rgba(239,68,68,0.8)"/>
+            <rect x="4" y="85" width="6" height="30" rx="2" fill="rgba(245,158,11,0.7)"/>
+            <circle cx="130" cy="60" r="6" fill="rgba(16,185,129,0.4)"/>
+            <circle cx="110" cy="100" r="6" fill="rgba(16,185,129,0.4)"/>
+            <circle cx="130" cy="140" r="6" fill="rgba(16,185,129,0.4)"/>
+          </svg>
+        </div>
+        <ul class="space-y-3 text-sm text-neutral-400">
+          <li class="flex items-start gap-2"><iconify-icon icon="lucide:shield" width="16" height="16" class="text-red-400 mt-0.5 shrink-0"></iconify-icon>Mantener la distancia con los oponentes</li>
+          <li class="flex items-start gap-2"><iconify-icon icon="lucide:shield" width="16" height="16" class="text-red-400 mt-0.5 shrink-0"></iconify-icon>Aplicar presión y comprender las intenciones del atacante</li>
+          <li class="flex items-start gap-2"><iconify-icon icon="lucide:shield" width="16" height="16" class="text-red-400 mt-0.5 shrink-0"></iconify-icon>Interrumpir el flujo del equipo contrario para recuperar balones</li>
+          <li class="flex items-start gap-2"><iconify-icon icon="lucide:shield" width="16" height="16" class="text-red-400 mt-0.5 shrink-0"></iconify-icon>Crear oportunidades de contraataque</li>
+        </ul>
+      </div>
+    </div>
+    <div class="animate-on-scroll"><h3 class="text-xl font-semibold mb-6 flex items-center gap-2"><iconify-icon icon="lucide:dumbbell" width="20" height="20" class="text-cyan-400"></iconify-icon>Componentes de Entrenamiento</h3></div>
+    <div class="grid sm:grid-cols-3 gap-6">
+      <div class="animate-on-scroll delay-1 hover-card card-gradient rounded-xl p-6 bg-surface-1/80">
+        <div class="w-8 h-8 rounded-lg bg-cyan-400/10 flex items-center justify-center mb-4"><iconify-icon icon="lucide:target" width="16" height="16" class="text-cyan-400"></iconify-icon></div>
+        <h4 class="font-semibold text-sm mb-2">Ejercicios Técnicos</h4>
+        <p class="text-xs text-neutral-400 leading-relaxed">Pases, lanzamientos, botes y maniobras defensivas. Los tiros a las esquinas inferiores mejoran la velocidad y precisión.</p>
+        <div class="mt-3 px-2 py-1 rounded text-[10px] bg-cyan-400/10 text-cyan-400 inline-block">Habilidades Fundamentales</div>
+      </div>
+      <div class="animate-on-scroll delay-2 hover-card card-gradient rounded-xl p-6 bg-surface-1/80">
+        <div class="w-8 h-8 rounded-lg bg-purple-400/10 flex items-center justify-center mb-4"><iconify-icon icon="lucide:flame" width="16" height="16" class="text-purple-400"></iconify-icon></div>
+        <h4 class="font-semibold text-sm mb-2">Preparación Física</h4>
+        <p class="text-xs text-neutral-400 leading-relaxed">Ejercicios de fuerza, resistencia, agilidad y flexibilidad vitales para el máximo rendimiento durante los partidos.</p>
+        <div class="mt-3 px-2 py-1 rounded text-[10px] bg-purple-400/10 text-purple-400 inline-block">Rendimiento</div>
+      </div>
+      <div class="animate-on-scroll delay-3 hover-card card-gradient rounded-xl p-6 bg-surface-1/80">
+        <div class="w-8 h-8 rounded-lg bg-amber-400/10 flex items-center justify-center mb-4"><iconify-icon icon="lucide:layout-grid" width="16" height="16" class="text-amber-400"></iconify-icon></div>
+        <h4 class="font-semibold text-sm mb-2">Ejercicios Tácticos</h4>
+        <p class="text-xs text-neutral-400 leading-relaxed">Simulan escenarios reales de juego. Formaciones: 6v6, 6v5, 7v6 para desarrollar adaptabilidad y toma de decisiones.</p>
+        <div class="mt-3 px-2 py-1 rounded text-[10px] bg-amber-400/10 text-amber-400 inline-block">Inteligencia de Juego</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="injuries" class="py-24 px-4 relative">
+  <div class="max-w-5xl mx-auto">
+    <div class="animate-on-scroll mb-16">
+      <span class="text-xs font-semibold text-orange-400 uppercase tracking-widest">Capítulo 08</span>
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight mt-3 gradient-text">Lesiones y Prevención</h2>
+      <p class="text-neutral-400 mt-4 max-w-2xl leading-relaxed">El balonmano conlleva riesgos inherentes de lesión debido a su naturaleza de contacto y las demandas físicas impuestas a los atletas.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="animate-on-scroll delay-1 hover-card card-gradient rounded-xl p-8 bg-surface-1/80 border-t-2 border-red-400/50">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg bg-red-400/10 flex items-center justify-center"><iconify-icon icon="lucide:alert-circle" width="20" height="20" class="text-red-400"></iconify-icon></div>
+          <h3 class="text-lg font-semibold">Lesiones Comunes</h3>
+        </div>
+        <ul class="space-y-3 text-sm text-neutral-400">
+          <li class="flex items-start gap-2"><iconify-icon icon="lucide:chevron-right" width="14" height="14" class="text-red-400 mt-1 shrink-0"></iconify-icon>Distensiones musculares (hombro y codo)</li>
+          <li class="flex items-start gap-2"><iconify-icon icon="lucide:chevron-right" width="14" height="14" class="text-red-400 mt-1 shrink-0"></iconify-icon>Dolor de espalda</li>
+          <li class="flex items-start gap-2"><iconify-icon icon="lucide:chevron-right" width="14" height="14" class="text-red-400 mt-1 shrink-0"></iconify-icon>Conmociones cerebrales (especialmente porteros)</li>
+        </ul>
+      </div>
+      <div class="animate-on-scroll delay-2 hover-card card-gradient rounded-xl p-8 bg-surface-1/80 border-t-2 border-amber-400/50">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg bg-amber-400/10 flex items-center justify-center"><iconify-icon icon="lucide:hard-hat" width="20" height="20" class="text-amber-400"></iconify-icon></div>
+          <h3 class="text-lg font-semibold">Riesgos de Conmociones</h3>
+        </div>
+        <ul class="space-y-3 text-sm text-neutral-400">
+          <li class="flex items-start gap-2"><iconify-icon icon="lucide:chevron-right" width="14" height="14" class="text-amber-400 mt-1 shrink-0"></iconify-icon>Los porteros son particularmente vulnerables</li>
+          <li class="flex items-start gap-2"><iconify-icon icon="lucide:chevron-right" width="14" height="14" class="text-amber-400 mt-1 shrink-0"></iconify-icon>2 min de suspensión por golpear al portero en la cabeza</li>
+          <li class="flex items-start gap-2"><iconify-icon icon="lucide:chevron-right" width="14" height="14" class="text-amber-400 mt-1 shrink-0"></iconify-icon>La IHF implementa medidas estrictas de seguridad</li>
+        </ul>
+      </div>
+      <div class="animate-on-scroll delay-3 hover-card card-gradient rounded-xl p-8 bg-surface-1/80 border-t-2 border-emerald-400/50">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-lg bg-emerald-400/10 flex items-center justify-center"><iconify-icon icon="lucide:heart-pulse" width="20" height="20" class="text-emerald-400"></iconify-icon></div>
+          <h3 class="text-lg font-semibold">Acondicionamiento y Prevención</h3>
+        </div>
+        <ul class="space-y-3 text-sm text-neutral-400">
+          <li class="flex items-start gap-2"><iconify-icon icon="lucide:chevron-right" width="14" height="14" class="text-emerald-400 mt-1 shrink-0"></iconify-icon>Datos deportivos y análisis para programas personalizados</li>
+          <li class="flex items-start gap-2"><iconify-icon icon="lucide:chevron-right" width="14" height="14" class="text-emerald-400 mt-1 shrink-0"></iconify-icon>El acondicionamiento regular reduce el riesgo de lesión</li>
+          <li class="flex items-start gap-2"><iconify-icon icon="lucide:chevron-right" width="14" height="14" class="text-emerald-400 mt-1 shrink-0"></iconify-icon>Mejora el rendimiento atlético general</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="quiz" class="py-24 px-4 relative">
+  <div class="max-w-3xl mx-auto">
+    <div class="animate-on-scroll mb-12 text-center">
+      <span class="text-xs font-semibold text-cyan-400 uppercase tracking-widest">Pon a Prueba tus Conocimientos</span>
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight mt-3 gradient-text">Cuestionario de Balonmano</h2>
+      <p class="text-neutral-400 mt-4">Desafíate con preguntas sobre el deporte del balonmano.</p>
+    </div>
+    <div class="animate-on-scroll mb-8">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-xs text-neutral-500 font-mono" id="quizProgress">Pregunta 1 / 8</span>
+        <span class="text-xs text-cyan-400 font-mono" id="quizScore">Puntuación: 0</span>
+      </div>
+      <div class="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+        <div id="quizProgressBar" class="h-full bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full transition-all duration-500" style="width:12.5%"></div>
+      </div>
+    </div>
+    <div id="quizCard" class="animate-on-scroll hover-card card-gradient rounded-xl p-8 bg-surface-1/80">
+      <div id="quizQuestion" class="text-lg font-semibold mb-6"></div>
+      <div id="quizOptions" class="space-y-3"></div>
+      <div id="quizFeedback" class="mt-6 hidden">
+        <div id="quizFeedbackText" class="text-sm p-4 rounded-lg"></div>
+      </div>
+      <button id="quizNextBtn" class="mt-6 hidden px-6 py-3 bg-white text-black text-sm font-semibold rounded-lg hover:scale-105 transition-transform duration-300">
+        Siguiente Pregunta <iconify-icon icon="lucide:arrow-right" width="16" height="16"></iconify-icon>
+      </button>
+    </div>
+    <div id="quizResult" class="hidden text-center">
+      <div class="hover-card card-gradient rounded-xl p-12 bg-surface-1/80">
+        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-cyan-400/20 to-purple-400/20 flex items-center justify-center mx-auto mb-6">
+          <iconify-icon icon="lucide:trophy" width="36" height="36" class="text-cyan-400"></iconify-icon>
+        </div>
+        <h3 class="text-2xl font-semibold mb-2">¡Cuestionario Completado!</h3>
+        <p class="text-neutral-400 mb-2">Tu puntuación:</p>
+        <div class="text-4xl font-semibold gradient-text-accent mb-4" id="quizFinalScore">0/8</div>
+        <p id="quizResultMessage" class="text-sm text-neutral-400 mb-6"></p>
+        <button id="quizRestartBtn" class="px-6 py-3 bg-white text-black text-sm font-semibold rounded-lg hover:scale-105 transition-transform duration-300">
+          Intentar de Nuevo <iconify-icon icon="lucide:refresh-cw" width="16" height="16"></iconify-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-24 px-4 relative">
+  <div class="max-w-3xl mx-auto text-center">
+    <div class="animate-on-scroll hover-card card-gradient rounded-2xl p-12 bg-surface-1/80 border border-white/5 relative overflow-hidden">
+      <div class="absolute inset-0 grid-bg opacity-20"></div>
+      <div class="relative z-10">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-400/20 to-purple-400/20 flex items-center justify-center mx-auto mb-6">
+          <iconify-icon icon="lucide:sparkles" width="28" height="28" class="text-cyan-400"></iconify-icon>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight gradient-text mb-4">Sigue Aprendiendo</h2>
+        <p class="text-neutral-400 leading-relaxed max-w-lg mx-auto mb-8">A medida que el balonmano continúa ganando reconocimiento más allá de sus bastiones tradicionales en Europa, su cultura evoluciona junto con las metodologías de entrenamiento moderno y la analítica, asegurando que el deporte siga siendo competitivo y atractivo tanto para jugadores como para aficionados.</p>
+        <div class="flex flex-wrap items-center justify-center gap-4">
+          <a href="#hero" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-black text-sm font-semibold rounded-lg hover:scale-105 transition-transform duration-300">
+            Volver al Inicio <iconify-icon icon="lucide:arrow-up" width="16" height="16"></iconify-icon>
+          </a>
+          <a href="#quiz" class="inline-flex items-center gap-2 px-6 py-3 border border-white/15 text-white text-sm font-medium rounded-lg hover:bg-white/5 hover:border-white/25 transition-all duration-300">
+            Rehacer Cuestionario <iconify-icon icon="lucide:brain" width="16" height="16"></iconify-icon>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="border-t border-white/5 py-12 px-4 relative z-10">
+  <div class="max-w-5xl mx-auto">
+    <div class="grid sm:grid-cols-3 gap-8 mb-8">
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center text-black font-bold text-sm">B</div>
+          <span class="font-semibold text-sm">GUÍA BALONMANO</span>
+        </div>
+        <p class="text-xs text-neutral-500 leading-relaxed">Un recurso educativo interactivo sobre el deporte del balonmano, su historia, reglas, estrategias y cultura.</p>
+      </div>
+      <div>
+        <h4 class="text-xs font-semibold text-neutral-300 uppercase tracking-wider mb-4">Capítulos</h4>
+        <ul class="space-y-2">
+          <li><a href="#history" class="text-xs text-neutral-500 hover:text-white transition-colors">Historia</a></li>
+          <li><a href="#rules" class="text-xs text-neutral-500 hover:text-white transition-colors">Reglas y Juego</a></li>
+          <li><a href="#equipment" class="text-xs text-neutral-500 hover:text-white transition-colors">Equipamiento</a></li>
+          <li><a href="#types" class="text-xs text-neutral-500 hover:text-white transition-colors">Tipos de Balonmano</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-xs font-semibold text-neutral-300 uppercase tracking-wider mb-4">Más</h4>
+        <ul class="space-y-2">
+          <li><a href="#competitions" class="text-xs text-neutral-500 hover:text-white transition-colors">Competiciones</a></li>
+          <li><a href="#culture" class="text-xs text-neutral-500 hover:text-white transition-colors">Cultura</a></li>
+          <li><a href="#strategy" class="text-xs text-neutral-500 hover:text-white transition-colors">Estrategia</a></li>
+          <li><a href="#quiz" class="text-xs text-neutral-500 hover:text-white transition-colors">Cuestionario</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-white/5 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-[10px] text-neutral-600">Solo contenido educativo. No representa el punto de vista del desarrollador.</p>
+      <p class="text-[10px] text-neutral-600">El contenido puede contener inexactitudes. Por favor, verifique la información importante.</p>
+    </div>
+  </div>
+</footer>
+
+<div id="toast" class="toast" role="status" aria-live="polite">
+  <span id="toastMessage" class="text-sm text-white"></span>
+</div>
+
+<script>
+(function() {
+  const title = 'BALONMANO';
+  const container = document.getElementById('heroTitle');
+  title.split('').forEach((char, i) => {
+    const span = document.createElement('span');
+    span.textContent = char;
+    span.className = 'char-animate inline-block';
+    span.style.animationDelay = (0.3 + i * 0.08) + 's';
+    span.style.opacity = '0';
+    container.appendChild(span);
+  });
+})();
+
+const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+const mobileMenuClose = document.getElementById('mobileMenuClose');
+mobileMenuBtn.addEventListener('click', () => {
+  mobileMenu.classList.add('open');
+  mobileMenuBtn.setAttribute('aria-expanded', 'true');
+});
+mobileMenuClose.addEventListener('click', () => {
+  mobileMenu.classList.remove('open');
+  mobileMenuBtn.setAttribute('aria-expanded', 'false');
+});
+document.querySelectorAll('.mobile-nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+  });
+});
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      b.classList.remove('active');
+      b.classList.add('text-neutral-400');
+      b.setAttribute('aria-selected', 'false');
+    });
+    btn.classList.add('active');
+    btn.classList.remove('text-neutral-400');
+    btn.setAttribute('aria-selected', 'true');
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+    document.getElementById('tab-' + btn.dataset.tab).classList.remove('hidden');
+  });
+});
+
+document.querySelectorAll('.hover-card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = ((y - centerY) / centerY) * -3;
+    const rotateY = ((x - centerX) / centerX) * 3;
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02,1.02,1.02)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)';
+  });
+});
+
+const quizData = [
+  {
+    question: "¿Cuándo se fundó la Federación Internacional de Balonmano (IHF)?",
+    options: ["1923", "1936", "1946", "1972"],
+    correct: 2,
+    explanation: "La IHF se fundó en 1946, reemplazando a la Federación Internacional de Balonmano Aficionado (IAHF)."
+  },
+  {
+    question: "¿Cuántos jugadores por equipo hay en la cancha en el balonmano interior?",
+    options: ["5", "6", "7", "11"],
+    correct: 2,
+    explanation: "El balonmano interior cuenta con 7 jugadores por equipo: 6 jugadores de campo y 1 portero."
+  },
+  {
+    question: "¿Cuáles son las dimensiones de una pista de balonmano reglamentaria?",
+    options: ["30m × 15m", "40m × 20m", "50m × 25m", "27m × 12m"],
+    correct: 1,
+    explanation: "Una pista de balonmano interior reglamentaria mide 40 metros de largo por 20 metros de ancho."
+  },
+  {
+    question: "¿Cuántos pasos puede dar un jugador mientras sostiene el balón?",
+    options: ["1 paso", "2 pasos", "3 pasos", "Pasos ilimitados"],
+    correct: 2,
+    explanation: "Los jugadores pueden moverse con el balón hasta 3 pasos antes de tener que pasar o lanzar."
+  },
+  {
+    question: "¿En qué año el balonmano se convirtió oficialmente en un deporte olímpico?",
+    options: ["1936", "1952", "1972", "1976"],
+    correct: 2,
+    explanation: "El balonmano se incluyó oficialmente en el programa olímpico en 1972 (Múnich). Fue un deporte de demostración en 1936."
+  },
+  {
+    question: "¿A qué distancia está el área de portería en forma de D de la línea de gol?",
+    options: ["3 metros", "5 metros", "6 metros", "7 metros"],
+    correct: 2,
+    explanation: "El área de portería en forma de D se extiende 6 metros desde la línea de gol. Solo el portero puede entrar."
+  },
+  {
+    question: "¿Qué tipo de balonmano otorga puntos adicionales por goles espectaculares?",
+    options: ["Balonmano Interior", "Balonmano Playa", "Mini-Balonmano", "Balonmano Callejero"],
+    correct: 1,
+    explanation: "El balonmano playa tiene reglas únicas donde los goles espectaculares pueden ganar puntos adicionales."
+  },
+  {
+    question: "¿Cuál es el tiempo máximo que un jugador puede retener el balón mientras está siendo marcado de cerca?",
+    options: ["3 segundos", "5 segundos", "7 segundos", "10 segundos"],
+    correct: 1,
+    explanation: "Los jugadores pueden sostener el balón por un máximo de 5 segundos mientras son marcados de cerca por un defensor."
+  }
+];
+
+let currentQuestion = 0;
+let score = 0;
+let answered = false;
+
+function loadQuestion() {
+  const q = quizData[currentQuestion];
+  document.getElementById('quizQuestion').textContent = q.question;
+  document.getElementById('quizProgress').textContent = `Pregunta ${currentQuestion + 1} / ${quizData.length}`;
+  document.getElementById('quizProgressBar').style.width = ((currentQuestion + 1) / quizData.length * 100) + '%';
+  
+  const optionsContainer = document.getElementById('quizOptions');
+  optionsContainer.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-option w-full text-left p-4 rounded-lg bg-white/5 flex items-center gap-3';
+    btn.setAttribute('role', 'radio');
+    btn.setAttribute('aria-label', opt);
+    btn.innerHTML = `
+      <span class="w-7 h-7 rounded-full border border-white/20 flex items-center justify-center text-xs font-mono shrink-0">${String.fromCharCode(65+i)}</span>
+      <span class="text-sm">${opt}</span>
+    `;
+    btn.addEventListener('click', () => selectAnswer(i));
+    optionsContainer.appendChild(btn);
+  });
+  
+  document.getElementById('quizFeedback').classList.add('hidden');
+  document.getElementById('quizNextBtn').classList.add('hidden');
+  answered = false;
+}
+
+function selectAnswer(index) {
+  if (answered) return;
+  answered = true;
+  const q = quizData[currentQuestion];
+  const options = document.querySelectorAll('.quiz-option');
+  
+  options.forEach(opt => opt.classList.add('disabled'));
+  
+  if (index === q.correct) {
+    options[index].classList.add('correct');
+    score++;
+    document.getElementById('quizScore').textContent = `Puntuación: ${score}`;
+    showFeedback(true, q.explanation);
+  } else {
+    options[index].classList.add('incorrect');
+    options[q.correct].classList.add('correct');
+    showFeedback(false, q.explanation);
+  }
+  
+  document.getElementById('quizNextBtn').classList.remove('hidden');
+}
+
+function showFeedback(isCorrect, explanation) {
+  const feedbackEl = document.getElementById('quizFeedback');
+  const textEl = document.getElementById('quizFeedbackText');
+  feedbackEl.classList.remove('hidden');
+  
+  if (isCorrect) {
+    textEl.className = 'text-sm p-4 rounded-lg bg-emerald-400/10 border border-emerald-400/20 text-emerald-300';
+    textEl.innerHTML = `<strong>¡Correcto!</strong> ${explanation}`;
+  } else {
+    textEl.className = 'text-sm p-4 rounded-lg bg-red-400/10 border border-red-400/20 text-red-300';
+    textEl.innerHTML = `<strong>No exactamente.</strong> ${explanation}`;
+  }
+}
+
+document.getElementById('quizNextBtn').addEventListener('click', () => {
+  currentQuestion++;
+  if (currentQuestion >= quizData.length) {
+    showResult();
+  } else {
+    loadQuestion();
+  }
+});
+
+function showResult() {
+  document.getElementById('quizCard').classList.add('hidden');
+  const resultEl = document.getElementById('quizResult');
+  resultEl.classList.remove('hidden');
+  document.getElementById('quizFinalScore').textContent = `${score}/${quizData.length}`;
+  
+  const pct = score / quizData.length;
+  let msg;
+  if (pct === 1) msg = "¡Puntuación perfecta! Eres un experto en balonmano 🏆";
+  else if (pct >= 0.75) msg = "¡Gran trabajo! ¡Realmente conoces el balonmano! ⭐";
+  else if (pct >= 0.5) msg = "¡Buen esfuerzo! ¡Sigue aprendiendo sobre el balonmano! 💪";
+  else msg = "¡Sigue estudiando! Revisa la guía e inténtalo de nuevo 📖";
+  document.getElementById('quizResultMessage').textContent = msg;
+  
+  showToast(`¡Cuestionario completado! Tu puntuación es ${score}/${quizData.length}`);
+}
+
+document.getElementById('quizRestartBtn').addEventListener('click', () => {
+  currentQuestion = 0;
+  score = 0;
+  document.getElementById('quizScore').textContent = 'Puntuación: 0';
+  document.getElementById('quizResult').classList.add('hidden');
+  document.getElementById('quizCard').classList.remove('hidden');
+  loadQuestion();
+});
+
+loadQuestion();
+
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toastMessage').textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3500);
+}
+
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('nav a[href^="#"]');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(section => {
+    const top = section.offsetTop - 100;
+    if (window.scrollY >= top) current = section.getAttribute('id');
+  });
+  navLinks.forEach(link => {
+    link.classList.remove('text-white', 'bg-white/5');
+    link.classList.add('text-neutral-400');
+    if (link.getAttribute('href') === '#' + current) {
+      link.classList.add('text-white', 'bg-white/5');
+      link.classList.remove('text-neutral-400');
+    }
+  });
+});
+
+if ('serviceWorker' in navigator) {
+  const swCode = `
+    const CACHE = 'handball-v1';
+    self.addEventListener('install', e => { self.skipWaiting(); });
+    self.addEventListener('activate', e => { e.waitUntil(clients.claim()); });
+    self.addEventListener('fetch', e => {
+      e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+    });
+  `;
+  const blob = new Blob([swCode], { type: 'application/javascript' });
+  const swUrl = URL.createObjectURL(blob);
+  navigator.serviceWorker.register(swUrl).catch(() => {});
+}
+</script>
+</body>
+</html>
